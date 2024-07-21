@@ -1,0 +1,58 @@
+{
+  "family": "aws-ci-demo",
+  "containerDefinitions": [
+    {
+      "name": "aws-ci-demo",
+      "image": "952758199057.dkr.ecr.ap-east-1.amazonaws.com/liulinhui/aws-ci-demo",
+      "cpu": 0,
+      "portMappings": [
+        {
+          "name": "8080",
+          "containerPort": 8080,
+          "hostPort": 8080,
+          "protocol": "tcp",
+          "appProtocol": "http"
+        }
+      ],
+      "essential": true,
+      "environment": [
+        {
+          "name": "DB_URL",
+          "value": "sadsadsadsadsad"
+        }
+      ],
+      "environmentFiles": [
+        {
+          "value": "arn:aws:s3:::amos-envs/.env",
+          "type": "s3"
+        }
+      ],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "ulimits": [],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/aws-ci-demo",
+          "awslogs-create-group": "true",
+          "awslogs-region": "ap-east-1",
+          "awslogs-stream-prefix": "ecs"
+        },
+        "secretOptions": []
+      },
+      "systemControls": []
+    }
+  ],
+  "taskRoleArn": "arn:aws:iam::952758199057:role/ecsTaskExecutionRole",
+  "executionRoleArn": "arn:aws:iam::952758199057:role/ecsTaskExecutionRole",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "cpu": "256",
+  "memory": "512",
+  "runtimePlatform": {
+    "cpuArchitecture": "X86_64",
+    "operatingSystemFamily": "LINUX"
+  }
+}

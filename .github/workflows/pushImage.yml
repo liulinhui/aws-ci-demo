@@ -44,8 +44,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}
             ${{ env.AWS_ECR_NAMESPACE }}/${{ env.IMAGE_NAME }}
+            ${{ env.GITHUB_REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -55,3 +55,19 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Render Amazon ECS task definition
+        id: render-aws-ci-demo-container
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: aws-ci-demo
+          image: ${{ fromJSON(steps.meta.outputs.json).tags[0] }}
+
+      - name: Deploy to Amazon ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-aws-ci-demo-container.outputs.task-definition }}
+          service: aws-ci-demo-service
+          cluster: amos-cluster
+          wait-for-service-stability: true
