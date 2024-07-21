@@ -7,6 +7,8 @@ on:
     branches:
       - feat*
 env:
+  AWS_CLUSTER: amos-cluster
+  AWS_SERVICE: aws-ci-demo-service
   GITHUB_REGISTRY: ghcr.io
   AWS_ECR_NAMESPACE: 952758199057.dkr.ecr.ap-east-1.amazonaws.com
   IMAGE_NAME: ${{ github.repository }}
@@ -67,6 +69,6 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.render-aws-ci-demo-container.outputs.task-definition }}
-          service: aws-ci-demo-service
-          cluster: amos-cluster
+          cluster: ${{ env.AWS_CLUSTER }}
+          service: ${{ env.AWS_SERVICE }}
           wait-for-service-stability: true
