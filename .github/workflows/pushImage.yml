@@ -9,7 +9,7 @@ on:
 env:
   GITHUB_REGISTRY: ghcr.io
   AWS_ECR_NAMESPACE: 952758199057.dkr.ecr.ap-east-1.amazonaws.com
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: aws-ci-demo
 
 jobs:
   build-push-images:
