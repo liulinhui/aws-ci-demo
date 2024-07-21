@@ -27,4 +27,4 @@ def print_hello_world():
 if __name__ == "__main__":
     thread = threading.Thread(target=print_hello_world, daemon=True)
     thread.start()
-    uvicorn.run(app, port=8080)
+    uvicorn.run(app, port=8080, host="0.0.0.0")
