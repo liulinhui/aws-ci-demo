@@ -71,4 +71,4 @@ jobs:
           task-definition: ${{ steps.render-aws-ci-demo-container.outputs.task-definition }}
           cluster: ${{ env.AWS_CLUSTER }}
           service: ${{ env.AWS_SERVICE }}
-          wait-for-service-stability: true
+#          wait-for-service-stability: true
